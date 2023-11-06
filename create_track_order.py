@@ -1,3 +1,5 @@
+# Григорьева Людмила 10-я когорта — Финальный проект. Инженер по тестированию плюс
+
 import sender_stand_request
 
 # Сохранение номера заказа
@@ -7,7 +9,7 @@ def get_track_of_order():
 
     return track.json()["track"]
 
-# Запрос на получения заказа по треку заказа
+# Запрос на получение заказа по треку заказа
 def test_create_and_track_order():
 
     track = get_track_of_order()
