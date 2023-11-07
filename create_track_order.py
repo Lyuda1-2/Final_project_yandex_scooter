@@ -1,18 +1,30 @@
 # Григорьева Людмила 10-я когорта — Финальный проект. Инженер по тестированию плюс
-import sender_stand_request
+import requests
+import configuration
+import data
 
-# Сохранение номера заказа
-def get_track_of_order():
+# Запрос на создание заказа
 
-    track = sender_stand_request.post_new_order()
+def post_new_order():
 
-    return track.json()["track"]
+    return requests.post(configuration.URL_SERVICE + configuration.CREATE_TRACK_ORDER,
+           json=data.order_body)
 
-# Запрос на получения заказа по треку заказа
-def test_create_and_track_order():
+# Получение номера заказа
+def get_order(track):
 
-    track = get_track_of_order()
+    return requests.get(configuration.URL_SERVICE + configuration.GET_ORDER,
+           params={"t": track})
 
-    get_response = sender_stand_request.get_order(track)
-# Проверка, что код ответа равен 200
-    assert get_response.status_code == 200
+# Автотест
+def test_create_order_and_getting_an_order_by_track():
+
+    response = post_new_order()
+
+    track = response.json()["track"]
+
+    order_response = get_order(track)
+
+    assert order_response.status_code == 200
+
+# Григорьева Людмила 10-я когорта — Финальный проект. Инженер по тестированию плюс
